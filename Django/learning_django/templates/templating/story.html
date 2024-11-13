@@ -1,0 +1,39 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templating | Our story</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/styles.css' %}">
+</head>
+<body>
+    <h1>Welcome to our story</h1>
+    {% load static %}
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'templating:home' %}">Home</a></li>
+            <li><a href="{% url 'templating:ourstory' %}">Our Story</a></li>
+            <li><a href="{% url 'templating:ourteam' %}">Our Team Members</a></li>
+            <li><a href="{% url 'templating:contactus' %}">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <br>
+
+    <h2>This is our story</h2>
+
+    <div class="story-content">
+        <img src="{% static 'assets/images/story1.jpeg' %}" alt="Story Image">
+
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, magni, nulla inventore nihil cumque voluptatibus odit fugiat earum sint ipsa mollitia eaque nostrum nobis, dignissimos et consequuntur dolorem qui accusamus?
+        </p>
+
+        <img src="{% static 'assets/images/story2.png' %}" alt="Story Image 2">
+    </div>
+</body>
+</html>

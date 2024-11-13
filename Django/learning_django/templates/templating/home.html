@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templating | Home</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/styles.css' %}">
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'templating:home' %}">Home</a></li>
+            <li><a href="{% url 'templating:ourstory' %}">Our Story</a></li>
+            <li><a href="{% url 'templating:ourteam' %}">Our Team Members</a></li>
+            <li><a href="{% url 'templating:contactus' %}">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <h1>We are learning how to use css with Django</h1>
+    
+    <div class="home">
+        <img src="{% static 'assets/images/django1.png' %}" alt="Django Image 1">
+        <img src="{% static 'assets/images/django2.png' %}" alt="Django Image 2">
+        <img src="{% static 'assets/images/django3.jfif' %}" alt="Django Image 3">
+        <img src="{% static 'assets/images/django4.jfif' %}" alt="Django Image 4">
+    </div>
+
+</body>
+</html>

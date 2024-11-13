@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning app | Team</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/styles.css' %}">
+</head>
+<body>
+    <h1>Welcome to our team</h1>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'story' %}">Our Story</a></li>
+            <li><a href="{% url 'team' %}">Our Team Members</a></li>
+            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+        </ul>
+    </nav>
+    <br>
+    <p>Meet the amazing people behind our project:</p>
+    
+    <ul>
+        <li>Limo Brian</li>
+        <li>John Kelvin</li>
+        <li>Hansel Fidel</li>
+        <li>Tony</li>
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} myapp | contact {% endblock %}
+
+{% block content %}
+<p style="color: chocolate; font-size: 30px; font-family: Verdana, Geneva, Tahoma, sans-serif;">If you have any questions or inquiries, feel free to reach out to us using the form below:</p>
+
+    <div class="contact">
+        <p>Email: limobrian48@gmail.com</p>
+        <p>or</p>
+        <p>Call us on: 0746120864</p>
+    </div>
+
+    <div class="image-container">
+        <img src="{% static 'assets/images/contacts1.jpeg' %}" alt="Contact Image 1">
+        <img src="{% static 'assets/images/contacts2.jpeg' %}" alt="Contact Image 2">
+    </div>
+
+{% endblock %}

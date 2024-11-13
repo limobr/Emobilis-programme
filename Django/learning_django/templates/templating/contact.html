@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templating | Contact us</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/styles.css' %}">
+</head>
+<body>
+    <h1>Contact us</h1>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'templating:home' %}">Home</a></li>
+            <li><a href="{% url 'templating:ourstory' %}">Our Story</a></li>
+            <li><a href="{% url 'templating:ourteam' %}">Our Team Members</a></li>
+            <li><a href="{% url 'templating:contactus' %}">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <br>
+    <p style="color: chocolate; font-size: 30px; font-family: Verdana, Geneva, Tahoma, sans-serif;">If you have any questions or inquiries, feel free to reach out to us using the form below:</p>
+
+    <div class="contact">
+        <p>Email: limobrian48@gmail.com</p>
+        <p>or</p>
+        <p>Call us on: 0746120864</p>
+    </div>
+
+    <div class="image-container">
+        <img src="{% static 'assets/images/contacts1.jpeg' %}" alt="Contact Image 1">
+        <img src="{% static 'assets/images/contacts2.jpeg' %}" alt="Contact Image 2">
+    </div>
+
+
+</body>
+</html>

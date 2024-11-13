@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% load static %} {% block title %} myapp | mystory {%
+endblock %} {% block content %}
+<h2>This is our story</h2>
+
+<div class="story-content">
+  <img src="{% static 'assets/images/story1.jpeg' %}" alt="Story Image" />
+
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, magni,
+    nulla inventore nihil cumque voluptatibus odit fugiat earum sint ipsa
+    mollitia eaque nostrum nobis, dignissimos et consequuntur dolorem qui
+    accusamus?
+  </p>
+
+  <img src="{% static 'assets/images/story2.png' %}" alt="Story Image 2" />
+</div>
+
+{% endblock %}

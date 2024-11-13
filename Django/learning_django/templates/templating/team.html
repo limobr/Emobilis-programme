@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templating | Team</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/styles.css' %}">
+</head>
+<body>
+    <h1>Welcome to our team</h1>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'templating:home' %}">Home</a></li>
+            <li><a href="{% url 'templating:ourstory' %}">Our Story</a></li>
+            <li><a href="{% url 'templating:ourteam' %}">Our Team Members</a></li>
+            <li><a href="{% url 'templating:contactus' %}">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <br>
+    <p style="color: chocolate; font-size: 30px; font-family: Verdana, Geneva, Tahoma, sans-serif;">Meet the amazing people behind our project:</p>
+    
+    <ul>
+        <li>
+            <img src="{% static 'assets/images/team1.jpeg' %}" alt="Limo Brian">
+            Limo Brian
+        </li>
+        <li>
+            <img src="{% static 'assets/images/team2.jpeg' %}" alt="John Kelvin">
+            John Kelvin
+        </li>
+        <li>
+            <img src="{% static 'assets/images/team3.jpeg' %}" alt="Hansel Fidel">
+            Hansel Fidel
+        </li>
+        <li>
+            <img src="{% static 'assets/images/team4.jpeg' %}" alt="Tony">
+            Tony
+        </li>
+    </ul>
+
+</body>
+</html>
