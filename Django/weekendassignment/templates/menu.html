@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Kindaski | Menu {% endblock %}
+
+{% block content %}
+<!-- Menu Section -->
+<section id="menu" class="menu section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Menu</h2>
+      <p>Check Our Tasty Menu</p>
+    </div><!-- End Section Title -->
+
+    <div class="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+      <div class="row" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-lg-12 d-flex justify-content-center">
+          <ul class="menu-filters isotope-filters">
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".filter-starters">Starters</li>
+            <li data-filter=".filter-salads">Salads</li>
+            <li data-filter=".filter-specialty">Specialty</li>
+          </ul>
+        </div>
+      </div><!-- Menu Filters -->
+
+      <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+        <div class="col-lg-6 menu-item isotope-item filter-starters">
+          <img src="{% static 'assets/img/menu/lobster-bisque.jpg' %}" class="menu-img" alt="">
+          <div class="menu-content">
+            <a href="#">Ugali and Sukuma Wiki</a><span>Ksh. 100</span>
+          </div>
+          <div class="menu-ingredients">
+            Cornmeal and Kales
+          </div>
+        </div><!-- Menu Item -->
+
+        <div class="col-lg-6 menu-item isotope-item filter-specialty">
+          <img src="{% static 'assets/img/menu/bread-barrel.jpg' %}" class="menu-img" alt="">
+          <div class="menu-content">
+            <a href="#">Pilau and Chicken Curry</a><span>Ksh. 200</span>
+          </div>
+          <div class="menu-ingredients">
+            Rice, Spices, and Chicken
+          </div>
+        </div><!-- Menu Item -->
+
+        <div class="col-lg-6 menu-item isotope-item filter-starters">
+          <img src="{% static 'assets/img/menu/cake.jpg' %}" class="menu-img" alt="">
+          <div class="menu-content">
+            <a href="#">Nyama Choma and Kachumbari</a><span>Ksh. 700</span>
+          </div>
+          <div class="menu-ingredients">
+            Grilled Meat and Fresh Salad
+          </div>
+        </div><!-- Menu Item -->
+
+        <div class="col-lg-6 menu-item isotope-item filter-salads">
+          <img src="{% static 'assets/img/menu/caesar.jpg' %}" class="menu-img" alt="">
+          <div class="menu-content">
+            <a href="#">Githeri</a><span>Ksh. 150</span>
+          </div>
+          <div class="menu-ingredients">
+            Beans and Maize
+          </div>
+        </div><!-- Menu Item -->
+
+        <div class="col-lg-6 menu-item isotope-item filter-specialty">
+          <img src="{% static 'assets/img/menu/tuscan-grilled.jpg' %}" class="menu-img" alt="">
+          <div class="menu-content">
+            <a href="#">Matoke and Beef Stew</a><span>Ksh. 70</span>
+          </div>
+          <div class="menu-ingredients">
+            Plantains and Beef
+          </div>
+        </div><!-- Menu Item -->
+
+        <div class="col-lg-6 menu-item isotope-item filter-starters">
+          <img src="{% static 'assets/img/menu/mozzarella.jpg' %}" class="menu-img" alt="">
+          <div class="menu-content">
+            <a href="#">Fish Fingers and Chips</a><span>Ksh. 90</span>
+          </div>
+          <div class="menu-ingredients">
+            Breaded Fish and Fried Potatoes
+          </div>
+        </div><!-- Menu Item -->
+
+        <div class="col-lg-6 menu-item isotope-item filter-salads">
+          <img src="{% static 'assets/img/menu/greek-salad.jpg' %}" class="menu-img" alt="">
+          <div class="menu-content">
+            <a href="#">Pizza</a><span>Ksh. 100</span>
+          </div>
+          <div class="menu-ingredients">
+            Dough, Tomato Sauce, Cheese, and Toppings
+          </div>
+        </div><!-- Menu Item -->
+
+        <div class="col-lg-6 menu-item isotope-item filter-salads">
+          <img src="{% static 'assets/img/menu/spinach-salad.jpg' %}" class="menu-img" alt="">
+          <div class="menu-content">
+            <a href="#">Spinach Salad</a><span>Ksh. 9.95</span>
+          </div>
+          <div class="menu-ingredients">
+            Fresh spinach with mushrooms, hard boiled egg, and warm bacon vinaigrette
+          </div>
+        </div><!-- Menu Item -->
+
+        <div class="col-lg-6 menu-item isotope-item filter-specialty">
+          <img src="{% static 'assets/img/menu/lobster-roll.jpg' %}" class="menu-img" alt="">
+          <div class="menu-content">
+            <a href="#">Burger</a><span>Ksh. 250</span>
+          </div>
+          <div class="menu-ingredients">
+            Beef Patty, Bun, Lettuce, Tomato, and Sauce
+          </div>
+        </div><!-- Menu Item -->
+
+      </div><!-- Menu Container -->
+
+    </div>
+
+</section><!-- /Menu Section -->
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Kindaski | About {% endblock %}
+
+{% block content %}
+<!-- About Section -->
+<section id="about" class="about section">
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="row gy-4">
+        <div class="col-lg-6 order-1 order-lg-2">
+          <img src="{%static 'assets/img/about.jpg'%}" class="img-fluid about-img" alt="">
+        </div>
+        <div class="col-lg-6 order-2 order-lg-1 content">
+          <h3>Your Local Culinary Haven</h3>
+          <p class="fst-italic">
+            Kibandaski <br>
+
+Nestled in the heart of Kabianga, Kericho, Kibanda Ski is more than just a restaurant; it's a culinary journey that celebrates the rich flavors of Kenyan cuisine. Our commitment to quality, taste, and exceptional service has made us a beloved local eatery. We pride ourselves on using fresh, locally sourced ingredients to create dishes that tantalize your taste buds.
+          </p>
+          <ul>
+            <li><i class="bi bi-check2-all"></i> <span>Fresh, Local Ingredients</span></li>
+            <li><i class="bi bi-check2-all"></i> <span>Warm Hospitality</span></li>
+            <li><i class="bi bi-check2-all"></i> <span>Diverse Flavorful Menu</span></li>
+          </ul>
+          <p>
+            <b>A Taste of Kabianga</b> <br>
+
+From hearty breakfasts to sumptuous dinners, our menu offers a diverse range of options to satisfy every craving. Whether you're in the mood for a traditional Kenyan meal or international favorites, our skilled chefs have got you covered. Join us at Kibanda Ski and experience the warmth of our hospitality, the aroma of our dishes, and the unforgettable flavors of Kabianga.
+
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </section><!-- /About Section -->
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %} Kibandaski | Bookings {% endblock %}
+
+{% block content %}
+<!-- Events Section -->
+<section id="events" class="events section">
+    <div class="container">
+
+    <table class="table table-dark table-responsive">
+    <thead>
+        <tr>
+            <th style="color: #cda45e;">Name</th>
+            <th style="color: #cda45e;">Email</th>
+            <th style="color: #cda45e;">Phone</th>
+            <th style="color: #cda45e;">Date</th>
+            <th style="color: #cda45e;">Time</th>
+            <th style="color: #cda45e;">People</th>
+            <th style="color: #cda45e;">Message</th>
+            <th style="color: #cda45e;">Action</th>
+        </tr>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{booking.name}}</td>
+                <td>{{booking.email}}</td>
+                <td>{{booking.phone}}</td>
+                <td>{{booking.date}}</td>
+                <td>{{booking.time}}</td>
+                <td>{{booking.people}}</td>
+                <td>{{booking.message}}</td>
+                <td>
+                    <!-- Trigger Modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ booking.id }}">
+                        Delete
+                    </button>
+                    <a href="{% url 'update_booking' booking.id %}" class="btn btn-primary">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </thead>
+    </table>
+    </div>
+</section>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this booking?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <a href="#" id="confirmDeleteButton" class="btn btn-danger">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Styling for the modal pop up -->
+<style>
+
+.modal-content {
+    background-color: #000;
+    border: 2px solid white;
+    color: #cda45e;
+    box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.75);
+}
+
+.modal-header, .modal-footer {
+    border-bottom: none; 
+    border-top: none;
+}
+
+.modal-title {
+    color: #cda45e;
+    font-family: sans-serif;
+}
+
+.modal-body {
+    color: #cda45e; 
+}
+
+/* .modal-footer .btn {
+    background-color: #cda45e; 
+    color: #000; 
+    border: none;
+} */
+
+.modal-footer .btn:hover {
+    background-color: #fff; 
+    color: #000;
+}
+</style>
+
+{% endblock %}

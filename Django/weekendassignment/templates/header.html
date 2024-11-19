@@ -1,0 +1,55 @@
+<header id="header" class="header fixed-top">
+
+    <div class="topbar d-flex align-items-center">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">limobrian48@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+2547 46 120 864</span></i>
+          
+        </div>
+        <div class="languages d-none d-md-flex align-items-center">
+          <ul>
+            {% if user.is_authenticated %}
+                <li>Currently logged in as {{ user.username }}</li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+        </div>
+      </div>
+    </div><!-- End Top Bar -->
+
+    <div class="branding d-flex align-items-cente">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <!-- <img src="assets/img/logo.png" alt=""> -->
+          <h1 class="sitename">Kibandaski</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="{% url 'home' %}" class="{% if request.path == '/' %} active {% endif %}">Home<br></a></li>
+            <li><a href="{% url 'about' %}" class="{% if request.path == '/about/' %}active{% endif %}">About</a></li>
+            <li><a href="{% url 'menu' %}" class="{% if request.path == '/menu/' %}active{% endif %}">Menu</a></li>
+            <li><a href="{% url 'specials' %}" class="{% if request.path == '/specials/' %}active{% endif %}">Specials</a></li>
+            <li><a href="{% url 'events' %}" class="{% if request.path == '/events/' %}active{% endif %}">Events</a></li>
+            {% comment %} <li><a href="{% url 'chefs' %}" class="{% if request.path == '/chefs/' %}active{% endif %}">Chefs</a></li> {% endcomment %}
+            <li><a href="{% url 'gallery' %}" class="{% if request.path == '/gallery/' %}active{% endif %}">Gallery</a></li>
+            
+            <li><a href="{% url 'book_table' %}" class="{% if request.path == '/book_table/' %}active{% endif %}">Book_table</a></li>
+            <li><a href="{% url 'show_bookings' %}" class="{% if request.path == '/show_bookings' %}active{% endif %}">Bookings</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a class="btn-book-a-table d-none d-xl-block" href="{% url 'book_table' %}">Book a Table</a>
+
+      </div>
+
+    </div>
+
+  </header>

@@ -1,0 +1,122 @@
+<!-- register.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Kindaski | Register {% endblock %}
+
+{% block content %}
+<style>
+   form {
+         color: white;
+         background-color: #cda45e;
+         border-radius: 5px;
+   
+         width: 400px;
+         padding: 40px;
+         margin: 150px auto;
+         margin-top: 0px;
+         margin-bottom: 0px;
+   
+         -webkit-box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.75);
+         -moz-box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.75);
+         box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.75);
+   
+      p {
+         font-size: 0.9em;
+      }
+   
+      button {
+         width: 100%;
+         text-align: center;
+         color: rgb(191, 163, 8);
+         margin-top: 20px;
+         background-color: aliceblue;
+         border: 1px solid rgba(0, 0, 0, 0.4);
+      }
+   
+      .form-group {
+         margin: 15px auto;
+   
+         label {
+            font-weight: bold;
+            font-size: 0.9em;
+         }
+   
+         .input-group {
+            border-radius: 5px;
+            -webkit-box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.35);
+            -moz-box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.35);
+            box-shadow: -1px 3px 18px 0px rgba(0, 0, 0, 0.35);
+   
+            .input-group-addon {
+               border: none;
+               border-right: 1px solid rgba(0, 0, 0, 0.2);
+            }
+   
+            input {
+               padding-left: 10px;
+            }
+   
+            i {
+               color: #009edf;
+            }
+         }
+   
+            input {
+               padding: 3px;
+               width: 100%;
+               border: none;
+               border-radius: 0 5px 5px 0;
+            }
+         }
+      }
+   
+   </style>
+
+<section>
+   
+    <form id="form" method="POST">
+        {% csrf_token %}
+        <p>Sign up once and watch our free things.</p>
+        {% if messages %}
+        <ul>
+          {% for message in messages %}
+          <li style="text-decoration: none; color: {% if message.tags == 'error' %} red {% else %} green {% endif %}; background-color: {% if message.tags == 'error' %} white {% else %} white {% endif %};">
+            {{ message }}
+          </li>
+          {% endfor %}
+        </ul>
+    {% endif %}
+        <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name" id="first_name" placeholder="Enter Your First Name" required />
+        </div>
+
+        <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name" id="last_name" placeholder="Enter Your Last Name" required />
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" placeholder="Enter Your Username" required />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="Enter Your Email" required />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Enter Your Password" required />
+        </div>
+
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Your Password" required />
+        </div>
+
+        <button type="submit" class="btn btn-default">Register</button>
+    </form>
+</section>
+{% endblock %}
