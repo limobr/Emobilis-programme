@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Booking
+from .models import Booking# Import the login_required
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home(request):
     return render(request, "home.html")
 
 def about(request):
     return render(request, 'about.html')
-    
+
+ 
+@login_required(login_url='login')   
 def book_table(request):
     """ Function to handle booking form submission """
     if request.method == 'POST':

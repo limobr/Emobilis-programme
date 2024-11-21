@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Cropper with Axis Control</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f3f3f3;
+      font-family: Arial, sans-serif;
+    }
+    canvas {
+      border: 2px dashed #ccc;
+      cursor: grab;
+      touch-action: none;
+    }
+    .controls {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .movement-controls {
+      margin-top: 10px;
+    }
+    button, label {
+      padding: 5px 15px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+    label {
+      cursor: pointer;
+      background-color: #f3f3f3;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <input type="file" id="imageUpload" accept="image/*">
+  <canvas id="canvas" width="300" height="300"></canvas>
+  <div class="controls">
+    <div class="movement-controls">
+      <label>
+        <input type="radio" name="movement" value="both" checked>
+        Free Movement
+      </label>
+      <label>
+        <input type="radio" name="movement" value="x">
+        Horizontal (X-axis)
+      </label>
+      <label>
+        <input type="radio" name="movement" value="y">
+        Vertical (Y-axis)
+      </label>
+    </div>
+    <button id="crop">Crop and Save</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const imageUpload = document.getElementById('imageUpload');
+    const cropButton = document.getElementById('crop');
+    const movementRadios = document.querySelectorAll('input[name="movement"]');
+    const cropSize = 300;
+
+    let img = new Image();
+    let scale = 1;
+    let offsetX = 0;
+    let offsetY = 0;
+    let isDragging = false;
+    let startX, startY;
+    let touchStartDist = 0;
+    let touchStartScale = 1;
+
+    // Current movement mode: 'both', 'x', or 'y'
+    let movementMode = 'both';
+
+    // Load Image
+    imageUpload.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      img.onload = () => {
+        scale = canvas.width / img.width;
+        offsetX = 0;
+        offsetY = 0;
+        drawImage();
+      };
+    });
+
+    // Update movement mode
+    movementRadios.forEach((radio) => {
+      radio.addEventListener('change', (e) => {
+        movementMode = e.target.value;
+      });
+    });
+
+    // Draw Image
+    function drawImage() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const scaledWidth = img.width * scale;
+      const scaledHeight = img.height * scale;
+
+      ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
+    }
+
+    // Mouse Dragging
+    canvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.offsetX;
+      startY = e.offsetY;
+      canvas.style.cursor = 'grabbing';
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        const dx = e.offsetX - startX;
+        const dy = e.offsetY - startY;
+
+        // Apply movement based on the selected mode
+        if (movementMode === 'both' || movementMode === 'x') {
+          offsetX += dx;
+        }
+        if (movementMode === 'both' || movementMode === 'y') {
+          offsetY += dy;
+        }
+
+        startX = e.offsetX;
+        startY = e.offsetY;
+        drawImage();
+      }
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      isDragging = false;
+      canvas.style.cursor = 'grab';
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      isDragging = false;
+      canvas.style.cursor = 'grab';
+    });
+
+    // Touch Dragging
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (isDragging && e.touches.length === 1) {
+        const dx = e.touches[0].clientX - startX;
+        const dy = e.touches[0].clientY - startY;
+
+        // Apply movement based on the selected mode
+        if (movementMode === 'both' || movementMode === 'x') {
+          offsetX += dx;
+        }
+        if (movementMode === 'both' || movementMode === 'y') {
+          offsetY += dy;
+        }
+
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        drawImage();
+      }
+    });
+
+    canvas.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Zoom with Scroll
+    canvas.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomIntensity = 0.1;
+      const mouseX = e.offsetX;
+      const mouseY = e.offsetY;
+
+      const zoom = e.deltaY < 0 ? 1 + zoomIntensity : 1 - zoomIntensity;
+
+      const newScale = scale * zoom;
+      const dx = (mouseX - offsetX) / scale;
+      const dy = (mouseY - offsetY) / scale;
+
+      offsetX -= dx * (newScale - scale);
+      offsetY -= dy * (newScale - scale);
+
+      scale = newScale;
+      drawImage();
+    });
+
+    // Zoom with Touch
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        touchStartDist = getDistance(e.touches[0], e.touches[1]);
+        touchStartScale = scale;
+      }
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 2) {
+        const touchDist = getDistance(e.touches[0], e.touches[1]);
+        const zoom = touchDist / touchStartDist;
+        const newScale = touchStartScale * zoom;
+
+        // Get the midpoint of the two touch points
+        const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+        // Adjust the offset to zoom towards the touch center
+        const dx = (midX - canvas.offsetLeft - offsetX) / scale;
+        const dy = (midY - canvas.offsetTop - offsetY) / scale;
+
+        offsetX -= dx * (newScale - scale);
+        offsetY -= dy * (newScale - scale);
+
+        scale = newScale;
+        drawImage();
+      }
+    });
+
+    canvas.addEventListener('touchend', (e) => {
+      if (e.touches.length < 2) {
+        touchStartDist = 0;
+        touchStartScale = 1;
+      }
+    });
+
+    // Get distance between two touch points
+    function getDistance(touch1, touch2) {
+      const dx = touch2.clientX - touch1.clientX;
+      const dy = touch2.clientY - touch1.clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    // Cropping Logic
+    cropButton.addEventListener('click', () => {
+      const croppedCanvas = document.createElement('canvas');
+      const croppedCtx = croppedCanvas.getContext('2d');
+      croppedCanvas.width = cropSize;
+      croppedCanvas.height = cropSize;
+
+      const visibleX = -offsetX / scale;
+      const visibleY = -offsetY / scale;
+
+      croppedCtx.drawImage(
+        img,
+        visibleX,
+        visibleY,
+        cropSize / scale,
+        cropSize / scale,
+        0,
+        0,
+        cropSize,
+        cropSize
+      );
+
+      const croppedImage = croppedCanvas.toDataURL();
+      const a = document.createElement('a');
+      a.href = croppedImage;
+      a.download = 'cropped-image.png';
+      a.click();
+    });
+  </script>
+</body>
+</html>

@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+# Import the login_required
+from django.contrib.auth.decorators import login_required
+from .models import UserProfile
 
 
 def register(request):
@@ -58,3 +61,90 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import UserProfile
+from django.core.exceptions import ObjectDoesNotExist
+
+def user_profile(request):
+    """Load and update user profile information"""
+    
+    # Load user data on GET request
+    if request.method == 'GET':
+        try:
+            # Get the user's profile
+            user_profile = request.user.userprofile
+
+            # If the user has a profile, populate the context with their details
+            context = {
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'username': request.user.username,
+                'email': request.user.email,
+                'phone': user_profile.phone,
+                'date_of_birth': user_profile.date_of_birth,
+                'county_name': user_profile.county_name,
+                'gender': user_profile.gender,
+                'profile_picture': user_profile.profile_picture.url if user_profile.profile_picture else 'https://bootdey.com/img/Content/avatar/avatar1.png'  # Default picture
+            }
+
+            return render(request, 'accounts/userprofile.html', context)
+
+        except UserProfile.DoesNotExist:
+            context = {
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'username': request.user.username,
+                'email': request.user.email,
+                'phone': '',
+                'date_of_birth': '',
+                'county_name': '',
+                'gender': '',
+                'profile_picture': 'https://bootdey.com/img/Content/avatar/avatar1.png'
+            }
+
+            return render(request, 'accounts/userprofile.html', context)
+
+    # Handle form submission on POST request
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        date_of_birth = request.POST.get('date_of_birth')
+        county_name = request.POST.get('county_name')
+        gender = request.POST.get('gender')
+
+        # Check if a new profile picture was uploaded
+        profile_picture = request.FILES.get('profile_picture')
+
+        # Update user object and save
+        user = request.user
+        user.first_name = first_name
+        user.last_name = last_name
+        user.username = username
+        user.email = email
+
+        # Check if the user has a related UserProfile
+        user_profile, created = UserProfile.objects.get_or_create(user=user)
+
+        # update users profile
+        user_profile.phone = phone
+        user_profile.date_of_birth = date_of_birth
+        user_profile.county_name = county_name
+        user_profile.gender = gender
+
+        # If a new profile picture is provided, update it
+        if profile_picture:
+            user_profile.profile_picture = profile_picture
+
+        # Save changes to both user and profile models
+        user.save()
+        user_profile.save()
+
+        messages.success(request, 'Profile updated successfully' if not created else 'Profile created successfully')
+        return redirect('user_profile')  # Redirect to the same page to show changes
+
+    return render(request, 'accounts/userprofile.html')
