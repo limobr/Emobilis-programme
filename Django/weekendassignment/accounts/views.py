@@ -2,10 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-# Import the login_required
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
-
+from django.templatetags.static import static
 
 def register(request):
     """Show the registration form and handle user registration"""
@@ -86,7 +85,7 @@ def user_profile(request):
                 'date_of_birth': user_profile.date_of_birth,
                 'county_name': user_profile.county_name,
                 'gender': user_profile.gender,
-                'profile_picture': user_profile.profile_picture.url if user_profile.profile_picture else 'https://bootdey.com/img/Content/avatar/avatar1.png'  # Default picture
+                'profile_picture': user_profile.profile_picture.url if user_profile.profile_picture else static('assets/img/default_dp.png')  # Default picture
             }
 
             return render(request, 'accounts/userprofile.html', context)
@@ -148,3 +147,5 @@ def user_profile(request):
         return redirect('user_profile')  # Redirect to the same page to show changes
 
     return render(request, 'accounts/userprofile.html')
+
+    

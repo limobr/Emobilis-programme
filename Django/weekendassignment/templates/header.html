@@ -1,10 +1,11 @@
+{% load static %}
 <header id="header" class="header fixed-top">
 
     <div class="topbar d-flex align-items-center">
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">limobrian48@gmail.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+2547 46 120 864</span></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>{{user.User_Profile.county_name}} </span></i>
           
         </div>
         <div class="languages d-none d-md-flex align-items-center">
@@ -40,14 +41,25 @@
             {% comment %} <li><a href="{% url 'chefs' %}" class="{% if request.path == '/chefs/' %}active{% endif %}">Chefs</a></li> {% endcomment %}
             <li><a href="{% url 'gallery' %}" class="{% if request.path == '/gallery/' %}active{% endif %}">Gallery</a></li>
             
-            <li><a href="{% url 'book_table' %}" class="{% if request.path == '/book_table/' %}active{% endif %}">Book_table</a></li>
             <li><a href="{% url 'show_bookings' %}" class="{% if request.path == '/show_bookings' %}active{% endif %}">Bookings</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
-
-        <a class="btn-book-a-table d-none d-xl-block" href="{% url 'book_table' %}">Book a Table</a>
-
+        
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <a class="btn-book-a-table d-none d-xl-block" href="{% url 'book_table' %}">Book a Table</a>
+          {% if user.is_authenticated %}
+              <a href="{% url 'user_profile' %}">
+                  <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture.url }}{% else %}{% static 'assets\img\default_dp.png' %}{% endif %}" alt="Profile" class="rounded-circle" width="40" height="40">
+              </a>
+          {% else %}
+              <a href="{% url 'login' %}">
+                  <img src="{% static 'assets\img\default_dp.png' %}" alt="Default Profile" class="rounded-circle" width="40" height="40">
+              </a>
+          {% endif %}
+      </div>
+      
+    
       </div>
 
     </div>

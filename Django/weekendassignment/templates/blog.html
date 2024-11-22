@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Kindaski | blogedit {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Create a Blog Post</h2>
+
+    {% if messages %}
+        <div class="alert alert-success">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data" class="bg-dark p-4 rounded shadow-sm">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Enter blog title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea name="description" class="form-control" id="description" rows="4" placeholder="Enter blog description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="image" class="form_labels">Upload Image:</label>
+            <input type="file" class="form-control-file" name="image" id="image" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Blog Post</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}

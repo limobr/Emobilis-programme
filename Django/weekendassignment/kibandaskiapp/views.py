@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Booking# Import the login_required
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Blog
 # Create your views here.
 def home(request):
     return render(request, "home.html")
@@ -81,3 +83,30 @@ def menu(request):
     
 def specials(request):
     return render(request, 'specials.html')
+
+def create_blog(request):
+    """ Function to handle blog form submission """
+    if request.method == 'POST':
+        # Creating a blog
+        blog_post = Blog(
+            title=request.POST['title'],
+            description=request.POST['description'],
+            image=request.FILES['image'], 
+        )
+        # Saving the blog post to the database
+        blog_post.save()
+
+        # Success message after saving
+        messages.success(request, "Blog post created successfully!")
+
+        # Redirect to the blog list 
+        return redirect('blog_list')
+
+    return render(request, 'blog.html')
+
+def blog_list(request):
+    """ Function to display all blog posts """
+    blogs = Blog.objects.all().order_by('-id') 
+
+    # Pass the blogs to the template
+    return render(request, 'blog_list.html', {'blogs': blogs})

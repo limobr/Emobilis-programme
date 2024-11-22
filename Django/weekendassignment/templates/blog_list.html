@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Kindaski | blog list {% endblock %}
+
+{% block content %}
+<div class="container mt-4"> <br><br>
+    <h1 class="text-center mb-5">Blog Posts</h1>
+    <!-- Display success messages -->
+    {% if messages %}
+        <div class="alert alert-success">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if blogs %}
+        <div class="row">
+            {% for blog in blogs %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if blog.image %}
+                            <img src="{{ blog.image.url }}" class="card-img-top" alt="{{ blog.title }}">
+                        {% else %}
+                            <img src="{% static 'default_image.jpg' %}" class="card-img-top" alt="Default Image">
+                        {% endif %}
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">{{ blog.title }}</h5>
+                            <p class="card-text">{{ blog.description|truncatewords:20 }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">No blog posts available.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

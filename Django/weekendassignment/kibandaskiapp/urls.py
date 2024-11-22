@@ -12,6 +12,9 @@ urlpatterns = [
     path('show_bookings', views.retrieve_bookings, name= 'show_bookings'),
     path('delete/<int:id>/', views.delete_booking, name= 'delete_booking'),
     path('edit/<int:booking_id>/', views.update_booking, name="update_booking"),
+    # blog part for image upload 
+    path('blog/', views.create_blog, name='blog'),
+    path('bloglist/', views.blog_list, name='blog_list'),
 
 
 ]
