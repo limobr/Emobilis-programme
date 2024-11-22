@@ -273,15 +273,18 @@
         <div class="card-body">
             <div class="row">
                 <!-- Profile Picture Section -->
-                <div class="col-md-4 d-flex justify-content-center align-items-center">
-                    <div class="profile-pic text-center">
-                        <!-- Profile Picture -->
-                        <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture.url }}{% else %}{% static 'assets\img\default_dp.png' %}{% endif %}" 
-                             alt="Profile Picture" 
-                             class="rounded-circle border border-3 p-2" 
-                             width="150" height="150">
-                    </div>
-                </div>
+<div class="col-md-4 d-flex justify-content-center align-items-center">
+    <div class="profile-pic text-center">
+        <!-- Full Screen Link for Profile Picture -->
+        <a href="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture.url }}{% else %}{% static 'assets/img/default_dp.png' %}{% endif %}" class="glightbox" data-gallery="profile-gallery">
+            <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture.url }}{% else %}{% static 'assets/img/default_dp.png' %}{% endif %}" 
+                 alt="Profile Picture" 
+                 class="rounded-circle border border-3 p-2" 
+                 width="150" height="150">
+        </a>
+    </div>
+</div>
+
 
                 <!-- User Information Section -->
                 <div class="col-md-8">

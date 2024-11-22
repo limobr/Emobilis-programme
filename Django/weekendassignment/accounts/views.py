@@ -149,3 +149,5 @@ def user_profile(request):
     return render(request, 'accounts/userprofile.html')
 
     
+def upload_image(request):
+    return render(request, 'accounts/upload_image.html')

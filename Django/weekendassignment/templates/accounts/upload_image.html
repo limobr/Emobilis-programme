@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Kindaski | Register {% endblock %}
+
+{% block content %}
+
+  <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .image-crop-body {
+      background-color: #f4f4f9;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+    .image-crop-container {
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      border-radius: 10px;
+      width: 100%;
+      text-align: center;
+    }
+    .image-crop-img-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px dashed #ddd;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .image-crop-img-container input[type="file"] {
+      display: none;
+    }
+    .image-crop-cropper-container {
+      max-width: 100%;
+      border-radius: 10px;
+      background-color: #f4f4f4;
+    }
+    .image-crop-img-preview {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+    .image-crop-file-label {
+      cursor: pointer;
+      padding: 10px 20px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .image-crop-file-label:hover {
+      background-color: #f0f0f0;
+    }
+    
+    /* For smaller screens */
+    #preview-section {
+      display: none; /* Hidden by default */
+    }
+
+    /* Media query for larger screens */
+    @media (min-width: 768px) {
+      .image-crop-body {
+        flex-direction: row;
+      }
+
+      #preview-section {
+        display: block; /* Show both crop and preview for larger screens */
+      }
+
+      .image-crop-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .image-crop-cropper-container, 
+      .image-crop-img-preview {
+        width: 48%; /* Make crop and preview sections side by side */
+      }
+    }
+  </style>
+
+<body class="image-crop-body">
+  {% include 'header.html' %}
+  <div class="container image-crop-container">
+    <h1 class="text-success font-weight-bold mb-4">Image Cropping with Resizing Box</h1>
+    
+    <!-- Cropper Section -->
+    <div id="crop-section" class="image-crop-cropper-container">
+      <div class="image-crop-img-container">
+        <label for="imageInput" class="image-crop-file-label">Choose an Image</label>
+        <input type="file" id="imageInput" accept="image/*">
+      </div>
+
+      <div>
+        <img id="image" src="" alt="Image" class="img-fluid" />
+      </div>
+
+      <div class="button-container mt-3">
+        <button id="cropButton" class="btn btn-success">Crop Image</button>
+      </div>
+    </div>
+
+    <!-- Preview Section -->
+    <div id="preview-section" class="image-crop-img-preview">
+      <h2 class="h5">Preview:</h2>
+      <img id="preview" src="" alt="Preview" class="img-fluid" />
+      <div class="button-container mt-3">
+        <button id="reCropButton" class="btn btn-warning">Crop Again</button>
+        <button id="proceedButton" class="btn btn-primary">Proceed</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/cropperjs/dist/cropper.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let cropper;
+    const imageInput = document.getElementById("imageInput");
+    const imageElement = document.getElementById("image");
+    const cropButton = document.getElementById("cropButton");
+    const reCropButton = document.getElementById("reCropButton");
+    const proceedButton = document.getElementById("proceedButton");
+    const previewElement = document.getElementById("preview");
+
+    const cropSection = document.getElementById("crop-section");
+    const previewSection = document.getElementById("preview-section");
+
+    // Handle image input change
+    imageInput.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          imageElement.src = e.target.result;
+          if (cropper) {
+            cropper.destroy();
+          }
+          cropper = new Cropper(imageElement, {
+            aspectRatio: 1, // Square crop
+            viewMode: 1, // Restrict the crop box inside the image
+            autoCropArea: 0.5, // Default size of the crop box
+            movable: true, // Allow the crop box to move
+            zoomable: true, // Allow zooming
+            rotatable: false, // Disable rotation
+            scalable: false, // Disable scaling
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Crop the image and show the preview
+    cropButton.addEventListener("click", () => {
+      if (cropper) {
+        const canvas = cropper.getCroppedCanvas();
+        previewElement.src = canvas.toDataURL("image/png");
+        
+        // On small screens, hide the crop section and show the preview section
+        if (window.innerWidth < 768) {
+          cropSection.style.display = "none";
+          previewSection.style.display = "block";
+        }
+      }
+    });
+
+    // Re-crop functionality (go back to cropper)
+    reCropButton.addEventListener("click", () => {
+      if (window.innerWidth < 768) {
+        previewSection.style.display = "none";
+        cropSection.style.display = "block";
+      }
+    });
+
+    // Proceed button logic (currently non-functional)
+    proceedButton.addEventListener("click", () => {
+      alert("Proceed button clicked. Waiting for functionality.");
+    });
+  </script>
+
+{% endblock %}
